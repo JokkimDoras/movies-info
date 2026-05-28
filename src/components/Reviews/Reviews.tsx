@@ -1,7 +1,8 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { apiMoviesReviews } from "../api";
-import ReviewsText from "./ReviewText";
+import { apiMoviesReviews } from "../api.ts";
+import ReviewsText from "./ReviewText.tsx";
 import { toast } from "react-toastify";
 
 import {
@@ -9,17 +10,18 @@ import {
   ReviewsItems,
   ReviewsAuthor,
   ReviewsIcon,
-} from "./Reviews.styled";
+} from "./Reviews.styled.js";
+import type { Movie, MovieResponse } from "../../types/movie.types.ts";
 
 export default function Reviews() {
   const { movieId } = useParams();
-  const [reviews, setReviews] = useState([]);
-  const [reviewsTrue, setReviewsTrue] = useState(false);
+  const [reviews, setReviews] = useState<Movie[]>([]);
+  const [reviewsTrue, setReviewsTrue] = useState<boolean>(false);
 
   useEffect(() => {
     async function getMoviesCast() {
       try {
-        const movie = await apiMoviesReviews(movieId);
+        const movie:MovieResponse = await apiMoviesReviews(movieId!)!;
         setReviews(movie.results);
         if (movie.results.length === 0) {
           setReviewsTrue(true);

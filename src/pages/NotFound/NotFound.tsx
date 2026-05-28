@@ -1,4 +1,5 @@
-import { NotFoundContainer, PageNotFound } from "../NotFound/NotFound.styled";
+import React from "react";
+import { NotFoundContainer, PageNotFound } from "./NotFound.styled";
 
 export default function NotFound() {
   return (

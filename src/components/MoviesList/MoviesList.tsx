@@ -1,3 +1,4 @@
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   MoviesItems,
@@ -9,16 +10,24 @@ import {
   Rating,
   RatingIcon,
   RatingWrapper,
-} from "./MoviesList.styled.js";
+} from "./MoviesList.styled.ts";
 
-export default function MoviesList({ movies }) {
+import type { Movie } from "../../types/movie.types.js";
+
+type Props = {
+  movies:Movie[];
+}
+
+
+export default function MoviesList({ movies }:Props) {
   const location = useLocation();
 
-  function formatNumber(number) {
-    if (number % 1 === 0) {
-      return Math.floor(number);
+  function formatNumber(number:string):number {
+    const num = Number(number)
+    if (num % 1 === 0) {
+      return Math.floor(num);
     } else {
-      return number;
+      return num;
     }
   }
 

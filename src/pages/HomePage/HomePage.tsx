@@ -1,15 +1,17 @@
+import React from "react";
 import { useEffect, useState } from "react";
-import MoviesList from "../../components/MoviesList/MoviesList";
-import getApi from "../../components/api";
+import MoviesList from "../../components/MoviesList/MoviesList.tsx";
+import getApi from "../../components/api.ts";
 import { toast } from "react-toastify";
 import {
   MoviesContainer,
   MoviesTitle,
   Container,
-} from "../HomePage/HomePage.styled";
+} from "./HomePage.styled.js";
+import type { MovieResponse,Movie } from "../../types/movie.types.ts";
 
 export default function HomePage() {
-  const [trending, setTrending] = useState([]);
+  const [trending, setTrending] = useState<Movie[]>([]);
 
   useEffect(() => {
     if (trending.length > 0) {
@@ -18,7 +20,7 @@ export default function HomePage() {
 
     async function api() {
       try {
-        const data = await getApi();
+        const data:MovieResponse = await getApi();
         setTrending(data.results);
       } catch (error) {
         toast.error("Oops, something went wrong! Reload this page!", {

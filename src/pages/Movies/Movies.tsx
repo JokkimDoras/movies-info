@@ -1,27 +1,30 @@
-import { Container, MoviesContainer } from "../Movies/Movies.styled";
-import SearchBar from "../../components/SearchBar/SearchBar";
+import React from "react";
+import { Container, MoviesContainer } from "./Movies.styled.js";
+import SearchBar from "../../components/SearchBar/SearchBar.tsx";
 import { useEffect, useState } from "react";
-import { apiSearchMovies } from "../../components/api";
-import MoviesList from "../../components/MoviesList/MoviesList";
-import Button from "../../components/ButtonLoadMore/Button";
-import Loader from "../../components/Loader/Loader";
+import { apiSearchMovies } from "../../components/api.ts";
+import MoviesList from "../../components/MoviesList/MoviesList.tsx";
+import Button from "../../components/ButtonLoadMore/Button.tsx";
+import Loader from "../../components/Loader/Loader.tsx";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import type { MovieResponse,Movie } from "../../types/movie.types.ts";
+
 
 export default function Movies() {
-  const [movies, setMovies] = useState([]);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [btnLoadMore, setBtnLoadMore] = useState(false);
+  const [btnLoadMore, setBtnLoadMore] = useState<boolean>(false);
 
   const query = searchParams.get("query") ?? "";
 
-  async function getSearchMovies(e) {
+  async function getSearchMovies(e:any) {
     e.preventDefault();
 
-    const queryEl = e.target.search.value;
+    const queryEl = e.target.search.value
 
     if (queryEl === "") {
       toast.info("Enter your request, please!", {
@@ -46,8 +49,7 @@ export default function Movies() {
       return;
     }
 
-    const searchedMovie = queryEl !== "" ? { query: queryEl } : {};
-    setSearchParams(searchedMovie);
+    setSearchParams({ query: queryEl });
 
     setPage(1);
     setMovies([]);
@@ -66,8 +68,8 @@ export default function Movies() {
       try {
         setLoading(true);
         setError(false);
-        const data = await apiSearchMovies(query, page);
-
+        const data:MovieResponse = await apiSearchMovies(query, page);
+       
         const totalPage = Math.ceil(data.total_results / data.results.length);
 
         if (page === 1) {

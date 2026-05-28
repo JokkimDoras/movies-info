@@ -76,7 +76,7 @@ export const MoviesImg = styled.img`
   height: 100%;
 `;
 
-export const Rating = styled.span`
+export const Rating = styled.span<{ value: number }>`
   color: ${(p) =>
     p.value !== 0 ? p.theme.colors.white : p.theme.colors.btnBgColor};
   font-size: 1.6rem;
@@ -85,7 +85,7 @@ export const Rating = styled.span`
   line-height: 1.25;
 `;
 
-export const RatingIcon = styled(FaStar)`
+export const RatingIcon = styled(FaStar)<{ value: number}>`
   color: ${(p) =>
     p.value !== 0 ? p.theme.colors.accent : p.theme.colors.btnBgColor};
   font-size: 1.6rem;

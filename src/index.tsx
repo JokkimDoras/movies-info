@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./components/App";
+import App from "./components/App.tsx";
 import { HashRouter } from "react-router-dom";
-import { GlobalStyle } from "./components/GlobalStyle";
+import { GlobalStyle } from "./components/GlobalStyle.js";
 import { ThemeProvider } from "styled-components";
 
 const theme = {
@@ -17,7 +17,7 @@ const theme = {
   },
 };
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
   <React.StrictMode>
     <HashRouter>

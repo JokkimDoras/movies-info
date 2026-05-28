@@ -1,6 +1,15 @@
+import React from "react";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { ReviewText, BtnExpander } from "./ReviewText.styled";
+
+type Props = {
+  children:string
+  collapsedNumWords?:number
+  expandButtonText?:string
+  collapseButtonText?:string
+  expanded?:boolean
+}
 
 export default function ReviewsText({
   children,
@@ -8,8 +17,9 @@ export default function ReviewsText({
   expandButtonText = "Show more",
   collapseButtonText = "Show less",
   expanded = false,
-}) {
-  const [isExpended, setIsExpended] = useState(expanded);
+}:Props) {
+  
+  const [isExpended, setIsExpended] = useState<boolean>(expanded);
 
   const displayText = isExpended
     ? children
@@ -31,11 +41,3 @@ export default function ReviewsText({
   );
 }
 
-ReviewsText.propTypes = {
-  collapsedNumWords: PropTypes.number,
-  expandButtonText: PropTypes.string,
-  collapseButtonText: PropTypes.string,
-  buttonColor: PropTypes.string,
-  className: PropTypes.string,
-  expanded: PropTypes.bool,
-};

@@ -1,7 +1,8 @@
+import React from "react";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useLocation, useParams, Outlet } from "react-router-dom";
-import { apiMoviesById } from "../../components/api";
-import StarRating from "../../components/StarRating/StarRating";
+import { apiMoviesById } from "../../components/api.ts";
+import StarRating from "../../components/StarRating/StarRating.js";
 import { toast } from "react-toastify";
 import {
   DetailsContainer,
@@ -21,12 +22,13 @@ import {
   CastMenu,
   CastIcon,
   CastItems,
-} from "./MovieDetails.styled";
+} from "./MovieDetails.styled.js";
+import type { MovieDetails } from "../../types/movie.types.ts";
 
 export default function Details() {
   const { movieId } = useParams();
   const location = useLocation();
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<MovieDetails | null>(null);
   const backLinkLocationRef = useRef(location.state?.from ?? "/movies");
 
   useEffect(() => {
@@ -35,7 +37,7 @@ export default function Details() {
     }
     async function getMoviesById() {
       try {
-        const movie = await apiMoviesById(movieId);
+        const movie:MovieDetails = await apiMoviesById(movieId!);
         setMovies(movie);
       } catch (error) {
         toast.error("Oops, something went wrong! Reload this page!", {
@@ -51,12 +53,16 @@ export default function Details() {
     getMoviesById();
   }, [movieId]);
 
-  function formatNumber(number) {
-    if (number % 1 === 0) {
-      return Math.floor(number);
+  function formatNumber(number:string):number {
+    const num = Number(number)
+    if (num % 1 === 0) {
+      return Math.floor(num);
     } else {
-      return number;
+      return num;
     }
+  }
+  if (!movies) {
+    return null;
   }
 
   const {

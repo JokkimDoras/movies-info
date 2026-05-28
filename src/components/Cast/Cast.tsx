@@ -1,6 +1,7 @@
-import { apiMoviesCast } from "../api";
+import React from "react";
+import { apiMoviesCast } from "../api.ts";
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import {
@@ -11,17 +12,17 @@ import {
   CastTextWrapper,
   CastChar,
   CastCharAs,
-} from "./Cast.styled";
+} from "./Cast.styled.js";
+import { MovieCast } from "../../types/movie.types.ts";
 
 export default function Cast() {
   const { movieId } = useParams();
-  const location = useLocation();
-  const [cast, setCast] = useState([]);
+  const [cast, setCast] = useState<MovieCast['cast'] | null>(null);
 
   useEffect(() => {
     async function getMoviesCast() {
       try {
-        const movie = await apiMoviesCast(movieId);
+        const movie:MovieCast = await apiMoviesCast(movieId!);
         setCast(movie.cast);
       } catch (error) {
         toast.error("Oops, something went wrong! Reload this page!", {

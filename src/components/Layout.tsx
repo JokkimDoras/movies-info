@@ -1,6 +1,7 @@
+import React from "react";
 import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
-import Loader from "./Loader/Loader";
+import Loader from "./Loader/Loader.tsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -11,7 +12,7 @@ import {
   LogoLink,
   LogoText,
   LogoSpan,
-} from "./Layout/Layout.styled";
+} from "./Layout/Layout.styled.js";
 
 export default function Layout() {
   return (

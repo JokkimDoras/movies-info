@@ -1,3 +1,4 @@
+import React from "react";
 import {
   SearchInput,
   SearchWrapper,
@@ -6,7 +7,11 @@ import {
   SearchForm,
 } from "./SearchBar.styled";
 
-export default function SearchBar({ onSearch, value }) {
+interface Props {
+  value:string
+  onSearch: (e: React.FormEvent<HTMLFormElement>) => void | Promise<void>;}
+
+export default function SearchBar({ onSearch, value }:Props) {
   return (
     <SearchWrapper>
       <SearchForm onSubmit={onSearch}>
